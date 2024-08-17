@@ -442,7 +442,7 @@ class BoneAnimation extends Animation {
 		var ti = sampler.offset;
 		//ti = ti < 0 ? 1 : ti;
 
-		interpoateSample(track, mm, t, ti, sign);
+		interpolateSample(track, mm, t, ti, sign);
 	}
 
 	function updateAnimSampledRootMotion(anim: TAnimation, mm: Mat4, rm: Mat4, sampler: ActionSampler) {
@@ -455,13 +455,13 @@ class BoneAnimation extends Animation {
 		var ti = sampler.offset;
 
 		if(sampler.trackEnd || !sampler.cacheInit) {
-			interpoateSample(track, bm, t, ti, sign);
+			interpolateSample(track, bm, t, ti, sign);
 			//bm.setF32(track.values, t0);
 			sampler.setActionCache(bm);
 		}
 
 		// Interpolated action for current frame
-		interpoateSample(track, m1, t, ti, sign);
+		interpolateSample(track, m1, t, ti, sign);
 		// Action at first frame
 		m.setF32(track.values, t0);
 		// Action at previous frame
@@ -507,7 +507,7 @@ class BoneAnimation extends Animation {
 	}
 
 
-	inline function interpoateSample(track: TTrack, m: Mat4, t: FastFloat, ti: Int, sign: Int) {
+	inline function interpolateSample(track: TTrack, m: Mat4, t: FastFloat, ti: Int, sign: Int) {
 		var t1 = track.frames[ti] * frameTime;
 		var t2 = track.frames[ti + sign] * frameTime;
 		var s: FastFloat = (t - t1) / (t2 - t1); // Linear
