@@ -59,7 +59,20 @@ class SpeakerObject extends Object {
 		for (c in channels) c.stop();
 		channels.splice(0, channels.length);
 	}
+	
+	public function setSound(sound: String) {
+		if (sound == null) return;
 
+		data.sound = sound;
+
+		Data.getSound(sound, function(sound: kha.Sound) {
+			this.sound = sound;
+		});
+	}
+
+	public function setVolume(volume: FastFloat) {
+		data.volume = volume;
+	}
 	function update() {
 		if (paused) return;
 		for (c in channels) if (c.finished) channels.remove(c);
